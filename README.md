@@ -1,5 +1,5 @@
-Cuis-Smalltalk-ColorEditor
-==========================
+Cuis-Smalltalk-Shootout-Benchmark
+=================================
 Tested in Cuis 4.2  rev 2917
 
 Simple port of CogBenchmarks-Shootout to Cuis.
