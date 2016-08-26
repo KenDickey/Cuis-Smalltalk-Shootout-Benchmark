@@ -2,6 +2,8 @@ Cuis-Smalltalk-ColorEditor
 ==========================
 Tested in Cuis 4.2  rev 2917
 
+Simple port of CogBenchmarks-Shootout to Cuis.
+
 Requires package SqueakCompatibility
 
 To load the package
