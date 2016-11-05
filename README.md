@@ -1,6 +1,6 @@
 Cuis-Smalltalk-Shootout-Benchmark
 =================================
-Tested in Cuis 4.2  rev 2917
+Tested in Cuis 4.2  rev 2972
 
 Simple port of CogBenchmarks-Shootout to Cuis.
 
@@ -13,6 +13,7 @@ To load the package
 
 WorldMenu->Open->Transcript
 ````Smalltalk
+	TranscriptWindow openTranscript.
 	Transcript clear.
 	ShootoutTests runAllToTranscript.
 	

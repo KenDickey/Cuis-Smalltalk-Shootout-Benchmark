@@ -1,8 +1,8 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #2919] on 26 August 2016 at 3:25:10 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #2972] on 5 November 2016 at 4:35:21 pm'!
 'Description CogBenchmarks-Shootout contains some benchmark code intended to be cross-platform.'!
-!provides: 'CogBenchmarks-Shootout' 1 1!
+!provides: 'CogBenchmarks-Shootout' 1 2!
 !requires: 'SqueakCompatibility' 1 24 nil!
-!requires: 'Cuis-Base' 42 2919 nil!
+!requires: 'Cuis-Base' 42 2972 nil!
 !classDefinition: #ShootoutBody category: #'CogBenchmarks-Shootout'!
 Object subclass: #ShootoutBody
 	instanceVariableNames: 'x y z vx vy vz mass'
@@ -320,7 +320,7 @@ createYellow
 
    ^super new color: #yellow! !
 
-!ShootoutChameneosColour class methodsFor: 'printing'!
+!ShootoutChameneosColour class methodsFor: 'printing' stamp: 'KenD 11/5/2016 16:13:40'!
 generateReportOfColoursOn: readOut
    | colours |
    colours := Array
@@ -336,7 +336,7 @@ generateReportOfColoursOn: readOut
                anotherColour printOn: readOut.
                readOut nextPutAll: ' -> '.
                (aColour complementaryColourFor: anotherColour) printOn: readOut.
-               readOut nl]].
+               readOut newLine]].
    ^readOut! !
 
 !ShootoutChameneosColour class methodsFor: 'initialize-release'!
@@ -506,7 +506,7 @@ createCreaturesWith: aCollectionOfColours
          aName := aName + 1.
          ShootoutCreature withName: aName colour: aColour]! !
 
-!ShootoutMall class methodsFor: 'printing'!
+!ShootoutMall class methodsFor: 'printing' stamp: 'KenD 11/5/2016 16:14:11'!
 generateReportFor: creatures printOn: stream
    | sum |
    sum := creatures inject: 0 into: [:accum :each | accum + each creaturesMet].
@@ -516,7 +516,7 @@ generateReportFor: creatures printOn: stream
          stream
             space;
             nextPutAll: (self units at: aCreature selfMet + 1);
-            nl].
+            newLine].
    stream space.
    sum printString
       do: [:el | stream nextPutAll: (self units at: el digitValue + 1)]
@@ -568,7 +568,7 @@ openMallWith: aCollectionOfColours forNumberOfMeets: aNumber
       usingGuard: guard.
    ^creatures! !
 
-!ShootoutMall class methodsFor: 'public' stamp: 'eem 8/1/2008 16:16'!
+!ShootoutMall class methodsFor: 'public' stamp: 'KenD 11/5/2016 16:15:07'!
 runBenchMark: number on: anOutputStream
    "self runBenchMark: 60000 on: Transcript."
 
@@ -592,19 +592,19 @@ runBenchMark: number on: anOutputStream
             add: red;
             add: blue;
             yourself.
-   (ShootoutChameneosColour generateReportOfColoursOn: anOutputStream) nl.
+   (ShootoutChameneosColour generateReportOfColoursOn: anOutputStream) newLine.
    (self generateReportForColours: firstTestColours printOn: anOutputStream)
-      nl.
+      newLine.
    creatures := ShootoutMall openMallWith: firstTestColours forNumberOfMeets: number.
    (self generateReportFor: creatures printOn: anOutputStream)
-      nl;
-      nl.
+      newLine;
+      newLine.
    (self generateReportForColours: secondTestColours printOn: anOutputStream)
-      nl.
+      newLine.
    creatures := ShootoutMall openMallWith: secondTestColours forNumberOfMeets: number.
    (self generateReportFor: creatures printOn: anOutputStream)
-      nl;
-      nl! !
+      newLine;
+      newLine! !
 
 !ShootoutMall class methodsFor: 'accessing'!
 units
@@ -708,7 +708,7 @@ binarytrees
 	self binarytrees: self arg to: self stdout.
 	^''! !
 
-!ShootoutTests class methodsFor: 'benchmarking' stamp: 'eem 8/1/2008 16:10'!
+!ShootoutTests class methodsFor: 'benchmarking' stamp: 'KenD 11/5/2016 16:13:24'!
 binarytrees: n to: output
 	| minDepth maxDepth stretchDepth check longLivedTree iterations |
 	minDepth := 4.
@@ -718,7 +718,7 @@ binarytrees: n to: output
 	check := (ShootoutTreeNode bottomUpTree: 0 depth: stretchDepth) itemCheck.
 	output
 		nextPutAll: 'stretch tree of depth '; print: stretchDepth; tab;
-		nextPutAll: ' check: '; print: check; nl.
+		nextPutAll: ' check: '; print: check; newLine.
 
 	longLivedTree := ShootoutTreeNode bottomUpTree: 0 depth: maxDepth.
 	minDepth to: maxDepth by: 2 do: [:depth|
@@ -732,12 +732,12 @@ binarytrees: n to: output
 		output
 			print:  (2*iterations); tab;
 			nextPutAll: ' trees of depth '; print: depth; tab;
-			nextPutAll: ' check: '; print: check; nl
+			nextPutAll: ' check: '; print: check; newLine
 		].
 
 	output
 		nextPutAll: 'long lived tree of depth '; print: maxDepth; tab;
-		nextPutAll: ' check: '; print: longLivedTree itemCheck; nl! !
+		nextPutAll: ' check: '; print: longLivedTree itemCheck; newLine! !
 
 !ShootoutTests class methodsFor: 'benchmark scripts' stamp: 'eem 8/1/2008 16:26'!
 chameneosredux2
@@ -767,25 +767,26 @@ collectReferenceTimes
 nbody
 	self nbody: self arg to: self stdout! !
 
-!ShootoutTests class methodsFor: 'benchmarking' stamp: 'eem 8/1/2008 16:09'!
+!ShootoutTests class methodsFor: 'benchmarking' stamp: 'KenD 11/5/2016 16:12:38'!
 nbody: count to: output
 	| bodies |
 	bodies := ShootoutNBodySystem new initialize.
 
-	output print: bodies energy digits: 9; cr.
+	output print: bodies energy digits: 9; newLine.
 	count timesRepeat: [bodies after: 0.01].
-	output print: bodies energy digits: 9; cr.
+	output print: bodies energy digits: 9; newLine.
 	^''! !
 
-!ShootoutTests class methodsFor: 'profiling' stamp: 'eem 10/16/2010 19:33'!
+!ShootoutTests class methodsFor: 'profiling' stamp: 'KenD 11/5/2016 16:27:09'!
 profileAll
 	"self profileAll"
 	| stream |
-	stream := DummyStream new.
-	self nbody: 200000 "20000000" to: stream.
-	self binarytrees: 15 to: stream.
-	self chameneosredux: 260000 to: stream.
-	self threadring: 10000000 to: stream! !
+	stream := DummyStream on: 'ignored'.
+	^[ self nbody: 200000 "20000000" to: stream.
+	   self binarytrees: 15 to: stream.
+ 	   self chameneosredux: 260000 to: stream.
+	   self threadring: 10000000 to: stream ] 
+		timeToRun ! !
 
 !ShootoutTests class methodsFor: 'benchmark scripts' stamp: 'eem 6/15/2014 19:03'!
 referenceArgs
@@ -882,9 +883,10 @@ runAllToInternalStreamVs: referenceTimes
 		nextPutAll: '   average speedup '; print: ((geometricMean - 1 * 100) roundTo: 0.01); nextPut: $%; cr; cr; flush.
 	^times contents! !
 
-!ShootoutTests class methodsFor: 'benchmark scripts' stamp: 'eem 6/24/2010 20:01'!
+!ShootoutTests class methodsFor: 'benchmark scripts' stamp: 'KenD 11/5/2016 16:34:15'!
 runAllToTranscript
-	"Transcript clear.
+	"TranscriptWindow openTranscript.
+	 Transcript clear.
 	 self runAllToTranscript"
 	^self runAllToTranscriptVs: self referenceTimesForClosureInterpreter! !
 
@@ -993,12 +995,12 @@ output: anObject
 
 	output := anObject! !
 
-!ShootoutThread methodsFor: 'accessing' stamp: 'eem 6/9/2009 12:33'!
+!ShootoutThread methodsFor: 'accessing' stamp: 'KenD 11/5/2016 16:14:39'!
 run
    [ self tokenNotDone ] whileTrue: [ nextThread takeToken: token - 1 ].
    output print: name.
    output name = 'stdout'
-	ifTrue: [output nl]
+	ifTrue: [output newLine]
 	ifFalse: [output cr; flush].
    done signal ! !
 
